@@ -13,7 +13,7 @@ public class NewContactPresenter {
         this.view = view;
         dataBase = view.getContextDataBase();
     }
-    public void CreateContact(String name, String email, int phoneNumber){
+    public void CreateContact(String name, String email, String phoneNumber){
 
         // check if valid contact.
         new Thread(() ->{

@@ -38,7 +38,8 @@ public class newContactActivity extends BaseActivity implements NewContactPresen
         save.setOnClickListener(view ->{
             presenter.CreateContact(name.getText().toString(),
                     email.getText().toString(),
-                    Integer.parseInt(phoneNumber.getText().toString()));
+                    phoneNumber.getText().toString());
+
         });
 
         LinearLayout mainLayout = new LinearLayout(this);

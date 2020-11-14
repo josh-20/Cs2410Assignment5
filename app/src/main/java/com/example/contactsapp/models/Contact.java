@@ -15,7 +15,7 @@ public class Contact implements Serializable {
     public String Name;
 
     @ColumnInfo(name = "Phone_Number")
-    public Integer PhoneNumber;
+    public String PhoneNumber;
 
     @ColumnInfo(name = "email_Address")
     public String emailAddress;

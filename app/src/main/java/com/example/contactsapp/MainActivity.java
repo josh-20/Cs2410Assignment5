@@ -55,11 +55,14 @@ public class MainActivity extends BaseActivity implements contactsPresenter.MVPV
                 ContactListItem listItem = new ContactListItem(this, contact);
                 listItem.setOnClickListener(view -> {
                     Intent intent = new Intent(this,ContactActivity.class);
-                    startActivity(intent,contact);
+                    intent.putExtra("name",contact.Name);
+                    intent.putExtra("phoneNumber",contact.PhoneNumber);
+                    intent.putExtra("email",contact.emailAddress);
+                    startActivity(intent);
                 });
                 contactsLayout.addView(listItem);
-                });
             });
+        });
     }
 
     @Override
