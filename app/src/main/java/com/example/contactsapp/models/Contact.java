@@ -19,4 +19,7 @@ public class Contact implements Serializable {
 
     @ColumnInfo(name = "email_Address")
     public String emailAddress;
+
+    @ColumnInfo(name ="image_path")
+    public String imagePath;
 }

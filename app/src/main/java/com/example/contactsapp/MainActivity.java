@@ -3,12 +3,16 @@ package com.example.contactsapp;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
+import androidx.appcompat.widget.AppCompatImageView;
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.room.Room;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Gravity;
+import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 
@@ -16,35 +20,44 @@ import com.example.contactsapp.components.ContactListItem;
 import com.example.contactsapp.database.AppDataBase;
 import com.example.contactsapp.models.Contact;
 import com.example.contactsapp.presenters.contactsPresenter;
+import com.google.android.material.button.MaterialButton;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 
 public class MainActivity extends BaseActivity implements contactsPresenter.MVPView {
     private final int CreateNewContact = 1;
     contactsPresenter presenter;
-    LinearLayout mainLayout;
+    FrameLayout mainLayout;
     LinearLayout contactsLayout;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         presenter = new contactsPresenter(this);
-        mainLayout = new LinearLayout(this);
+        mainLayout = new FrameLayout(this);
+        ScrollView contactsScroll = new ScrollView(this);
+        FrameLayout.LayoutParams materialButtonParams = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,ViewGroup.LayoutParams.WRAP_CONTENT);
+        AppCompatImageView imageView = new AppCompatImageView(this);
+        imageView.setImageResource(R.drawable.ic_launcher_foreground);
         contactsLayout = new LinearLayout(this);
-        ScrollView scrollView = new ScrollView(this);
 
-        mainLayout.setOrientation(LinearLayout.VERTICAL);
+        materialButtonParams.gravity = (Gravity.BOTTOM | Gravity.RIGHT);
+
+
         contactsLayout.setOrientation(LinearLayout.VERTICAL);
-        mainLayout.addView(contactsLayout);
-        scrollView.addView(mainLayout);
+        mainLayout.addView(imageView);
+        contactsScroll.addView(contactsLayout);
 
-        AppCompatButton newContact = new AppCompatButton(this);
-        newContact.setText("New Contact");
+        FloatingActionButton newContact = new FloatingActionButton(this);
+        newContact.setLayoutParams(materialButtonParams);
+        newContact.setImageResource(R.drawable.ic_baseline_add_24);
         newContact.setOnClickListener(view -> {
             presenter.goToNewContactsPage();
         });
         mainLayout.addView(newContact);
-        setContentView(scrollView);
+        mainLayout.addView(contactsScroll);
+        setContentView(mainLayout);
     }
 
     @Override
@@ -53,13 +66,6 @@ public class MainActivity extends BaseActivity implements contactsPresenter.MVPV
             contactsLayout.removeAllViews();
             contacts.forEach(contact -> {
                 ContactListItem listItem = new ContactListItem(this, contact);
-                listItem.setOnClickListener(view -> {
-                    Intent intent = new Intent(this,ContactActivity.class);
-                    intent.putExtra("name",contact.Name);
-                    intent.putExtra("phoneNumber",contact.PhoneNumber);
-                    intent.putExtra("email",contact.emailAddress);
-                    startActivity(intent);
-                });
                 contactsLayout.addView(listItem);
             });
         });
