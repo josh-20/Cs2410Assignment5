@@ -75,7 +75,7 @@ public class ContactActivity extends BaseActivity implements contactPresenter.MV
 
         MaterialButton contactNumber = new MaterialButton(this,null,R.attr.materialButtonOutlinedStyle);
         contactNumber.setText(contact.PhoneNumber);
-        MaterialTextView contactEmail = new MaterialTextView(this,null,R.attr.materialButtonOutlinedStyle);
+        MaterialButton contactEmail = new MaterialButton(this,null,R.attr.materialButtonOutlinedStyle);
         contactEmail.setPadding(0,0,0,0);
         contactEmail.setText(contact.emailAddress);
         bodyLayout.addView(contactNumber);
@@ -123,7 +123,7 @@ public class ContactActivity extends BaseActivity implements contactPresenter.MV
         Intent intent = new Intent();
         if(didDelete){
             intent.putExtra("id",contact.id);
-            setResult(MainActivity.DELETED_RESULT,intent);
+            setResult(ContactsActivity.DELETED_RESULT,intent);
         }else{
             setResult(Activity.RESULT_CANCELED,null);
         }

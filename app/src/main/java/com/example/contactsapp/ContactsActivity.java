@@ -26,7 +26,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 
-public class MainActivity extends BaseActivity implements contactsPresenter.MVPView {
+public class ContactsActivity extends BaseActivity implements contactsPresenter.MVPView {
     private final int CreateNewContact = 1;
     contactsPresenter presenter;
     FrameLayout mainLayout;
