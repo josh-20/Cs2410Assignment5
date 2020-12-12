@@ -68,13 +68,20 @@ public class ContactActivity extends BaseActivity implements contactPresenter.MV
 
         //body Layout
         MaterialCardView bodyView = new MaterialCardView(this);
-        bodyView.setPadding(60,100,60,0);
+        LinearLayout bodyLayout = new LinearLayout(this);
+        LinearLayout.LayoutParams bp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.MATCH_PARENT);
+        bodyLayout.setOrientation(LinearLayout.HORIZONTAL);
+        bodyLayout.setLayoutParams(bp);
+
         MaterialButton contactNumber = new MaterialButton(this,null,R.attr.materialButtonOutlinedStyle);
         contactNumber.setText(contact.PhoneNumber);
         MaterialTextView contactEmail = new MaterialTextView(this,null,R.attr.materialButtonOutlinedStyle);
+        contactEmail.setPadding(0,0,0,0);
         contactEmail.setText(contact.emailAddress);
-        bodyView.addView(contactNumber);
-        bodyView.addView(contactEmail);
+        bodyLayout.addView(contactNumber);
+        bodyLayout.addView(contactEmail);
+
+        bodyView.addView(bodyLayout);
 
 
         // button Layout
