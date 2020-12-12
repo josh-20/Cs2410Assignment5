@@ -19,9 +19,13 @@ import com.example.contactsapp.presenters.contactsPresenter;
 import com.google.android.material.button.MaterialButton;
 
 public class ContactListItem extends LinearLayout {
+    private Contact contact;
 
     public ContactListItem(Context context, Contact contact){
         super(context);
+        this.contact = contact;
+        setTag(contact.id);
+
 
         MaterialButton button = new MaterialButton(context,null, R.attr.borderlessButtonStyle);
         LayoutParams params = new LayoutParams(LayoutParams.MATCH_PARENT,LayoutParams.WRAP_CONTENT);
@@ -31,14 +35,11 @@ public class ContactListItem extends LinearLayout {
         button.setOnClickListener(view -> {
             Intent intent = new Intent(context, ContactActivity.class);
             intent.putExtra("contact",contact);
-//            intent.putExtra("phoneNumber",contact.PhoneNumber);
-//            intent.putExtra("email",contact.emailAddress);
             context.startActivity(intent);
         });
         button.setTextSize(12);
         addView(button);
 
     }
-
 
 }

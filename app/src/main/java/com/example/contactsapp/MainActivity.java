@@ -11,6 +11,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Gravity;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
@@ -30,6 +31,8 @@ public class MainActivity extends BaseActivity implements contactsPresenter.MVPV
     contactsPresenter presenter;
     FrameLayout mainLayout;
     LinearLayout contactsLayout;
+    public final static int DELETED_RESULT = 1;
+    public final static int UPDATED_RESULT = 2;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -79,11 +82,22 @@ public class MainActivity extends BaseActivity implements contactsPresenter.MVPV
     }
 
     @Override
+    public void removeContactViewId(long id) {
+        View view = contactsLayout.findViewWithTag(id);
+        contactsLayout.removeView(view);
+    }
+
+
+    @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if(requestCode == CreateNewContact && resultCode == Activity.RESULT_OK) {
             Contact newContact = (Contact)data.getSerializableExtra("result");
             presenter.onNewContactCreate(newContact);
+        }
+        if (requestCode == CreateNewContact && resultCode == DELETED_RESULT){
+            long id = data.getLongExtra("id",-1);
+            presenter.handleContactDeleted(id);
         }
     }
 }

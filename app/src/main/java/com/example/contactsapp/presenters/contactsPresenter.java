@@ -12,8 +12,9 @@ public class contactsPresenter{
     private AppDataBase dataBase;
 
     public interface MVPView extends BaseMVPView{
-        public void renderContacts(ArrayList<Contact> contacts);
-        public void goToNewContactsPage();
+         void renderContacts(ArrayList<Contact> contacts);
+         void goToNewContactsPage();
+         void removeContactViewId(long id);
     }
 
     public contactsPresenter(MVPView view){
@@ -31,5 +32,11 @@ public class contactsPresenter{
     public void onNewContactCreate(Contact contact){
         contacts.add(contact);
         view.renderContacts(contacts);
+    }
+    public void handleContactDeleted(long id){
+        contacts.removeIf(contact -> {
+            return contact.id == id;
+        });
+        view.removeContactViewId(id);
     }
 }

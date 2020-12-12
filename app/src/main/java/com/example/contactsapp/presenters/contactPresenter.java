@@ -10,11 +10,19 @@ public class contactPresenter {
     private Contact contact;
 
     public interface MVPView extends BaseMVPView{
-        public void displayContact(Contact contact);
+        void goBackToContactsPage(Contact contact,boolean didDelete);
+
     }
 
     public contactPresenter(MVPView view){
         this.view = view;
-        view.displayContact(contact);
+        dataBase = view.getContextDataBase();
+    }
+
+    public void deleteContact(Contact contact){
+        new Thread(() ->{
+            dataBase.getTodoDao().delete(contact);
+            view.goBackToContactsPage(contact,true);
+        }).start();
     }
 }
