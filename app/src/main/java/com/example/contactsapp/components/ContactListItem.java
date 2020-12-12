@@ -7,6 +7,7 @@ import android.view.Gravity;
 import android.widget.LinearLayout;
 
 import androidx.appcompat.widget.AppCompatButton;
+import androidx.appcompat.widget.AppCompatImageView;
 import androidx.appcompat.widget.AppCompatTextView;
 
 import com.example.contactsapp.BaseActivity;
@@ -21,6 +22,7 @@ public class ContactListItem extends LinearLayout {
 
     public ContactListItem(Context context, Contact contact){
         super(context);
+
         MaterialButton button = new MaterialButton(context,null, R.attr.borderlessButtonStyle);
         LayoutParams params = new LayoutParams(LayoutParams.MATCH_PARENT,LayoutParams.WRAP_CONTENT);
         button.setLayoutParams(params);

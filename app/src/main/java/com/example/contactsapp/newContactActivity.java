@@ -100,7 +100,7 @@ public class newContactActivity extends BaseActivity implements NewContactPresen
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode == PICK_IMAGE && requestCode == Activity.RESULT_OK){
+        if(requestCode == PICK_IMAGE && resultCode == Activity.RESULT_OK){
             String uri = data.getData().toString();
             presenter.handlePictureSelected(uri);
         }
