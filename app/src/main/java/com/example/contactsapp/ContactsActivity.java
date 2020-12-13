@@ -76,7 +76,7 @@ public class ContactsActivity extends BaseActivity implements contactsPresenter.
     }
 
     @Override
-    public void removeContactViewId(long id) {
+    public void removeContactView(long id) {
         View view = contactsLayout.findViewWithTag(id);
         contactsLayout.removeView(view);
     }

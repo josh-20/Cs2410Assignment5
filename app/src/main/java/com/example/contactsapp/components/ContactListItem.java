@@ -23,18 +23,16 @@ import com.google.android.material.circularreveal.CircularRevealLinearLayout;
 import com.google.android.material.imageview.ShapeableImageView;
 
 public class ContactListItem extends LinearLayout {
-    private Contact contact;
 
     public ContactListItem(Context context, Contact contact){
         super(context);
-        this.contact = contact;
         LinearLayout layout = new LinearLayout(context);
         layout.setOrientation(HORIZONTAL);
-
         setTag(contact.id);
-        LinearLayout.LayoutParams imageParams = new LinearLayout.LayoutParams(150,150 );
+
+        LinearLayout.LayoutParams imageParams = new LinearLayout.LayoutParams(125,125 );
         if(!contact.imagePath.equals("")){
-            ShapeableImageView imageView = new ShapeableImageView(context);
+            AppCompatImageView imageView= new AppCompatImageView(context);
             imageView.setImageURI(Uri.parse(contact.imagePath));
             imageView.setLayoutParams(imageParams);
             layout.addView(imageView);
@@ -59,5 +57,4 @@ public class ContactListItem extends LinearLayout {
         addView(layout);
 
     }
-
 }

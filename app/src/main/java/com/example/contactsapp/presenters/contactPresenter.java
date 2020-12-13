@@ -12,6 +12,9 @@ public class contactPresenter {
     public interface MVPView extends BaseMVPView{
         void goBackToContactsPage(Contact contact,boolean didDelete);
         void goToEditPage(Contact contact);
+        void makePhoneCall(String number);
+        void sendText(String number);
+        void sendEmail(String emailAdress);
 
     }
 
@@ -28,5 +31,16 @@ public class contactPresenter {
     }
     public void handleEditClick(){
         view.goToEditPage(contact);
+    }
+    public void handleCallPress(String phoneNumber){
+        view.makePhoneCall(phoneNumber);
+
+    }
+    public void handleTextPress(String phoneNumber){
+        view.sendText(phoneNumber);
+
+    }
+    public void handleEmailPress(String email){
+        view.sendEmail(email);
     }
 }

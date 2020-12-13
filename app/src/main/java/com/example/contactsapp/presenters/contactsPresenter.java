@@ -14,7 +14,7 @@ public class contactsPresenter{
     public interface MVPView extends BaseMVPView{
          void renderContacts(ArrayList<Contact> contacts);
          void goToNewContactsPage();
-         void removeContactViewId(long id);
+         void removeContactView(long id);
     }
 
     public contactsPresenter(MVPView view){
@@ -37,6 +37,6 @@ public class contactsPresenter{
         contacts.removeIf(contact -> {
             return contact.id == id;
         });
-        view.removeContactViewId(id);
+        view.removeContactView(id);
     }
 }

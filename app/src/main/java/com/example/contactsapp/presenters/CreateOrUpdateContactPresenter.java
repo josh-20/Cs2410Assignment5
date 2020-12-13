@@ -11,6 +11,7 @@ public class CreateOrUpdateContactPresenter {
     public interface MVPView extends BaseMVPView{
          void goBackToContactsPage(Contact contact);
          void goToPhotos();
+         void takePhoto();
          void displayImage(String uri);
          void renderContactForm(Contact contact);
     }
@@ -48,6 +49,9 @@ public class CreateOrUpdateContactPresenter {
 
     public void handleSelectPicturePress(){
         view.goToPhotos();
+    }
+    public void handleTakePicturePress(){
+        view.takePhoto();
     }
     public void handlePictureSelected(String uri){
         view.displayImage(uri);
