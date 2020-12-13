@@ -11,6 +11,7 @@ public class contactPresenter {
 
     public interface MVPView extends BaseMVPView{
         void goBackToContactsPage(Contact contact,boolean didDelete);
+        void goToEditPage(Contact contact);
 
     }
 
@@ -24,5 +25,8 @@ public class contactPresenter {
             dataBase.getTodoDao().delete(contact);
             view.goBackToContactsPage(contact,true);
         }).start();
+    }
+    public void handleEditClick(){
+        view.goToEditPage(contact);
     }
 }

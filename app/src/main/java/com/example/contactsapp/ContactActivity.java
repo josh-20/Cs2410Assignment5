@@ -22,8 +22,9 @@ import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.textview.MaterialTextView;
 
-public class ContactActivity extends BaseActivity implements contactPresenter.MVPView{
+public class ContactActivity extends BaseActivity implements contactPresenter.MVPView {
     contactPresenter presenter;
+    private final int UPDATE_POST = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,9 +33,6 @@ public class ContactActivity extends BaseActivity implements contactPresenter.MV
         Intent intent = getIntent();
         Contact contact = (Contact)intent.getSerializableExtra("contact");
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.WRAP_CONTENT);
-
-
-
 
         // wrapper
         LinearLayout wrapper = new LinearLayout(this);
@@ -53,7 +51,13 @@ public class ContactActivity extends BaseActivity implements contactPresenter.MV
             imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
             imageView.setImageURI(Uri.parse(contact.imagePath));
             top.addView(imageView);
-        }
+        }else{
+            AppCompatImageView imageView = new AppCompatImageView(this);
+            LinearLayout.LayoutParams imageParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,1000);
+            imageView.setLayoutParams(imageParams);
+            imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+            imageView.setImageResource(R.drawable.ic_baseline_person_24);
+            top.addView(imageView);}
 
         // Title Layout
         LinearLayout titleView = new LinearLayout(this);
@@ -97,7 +101,7 @@ public class ContactActivity extends BaseActivity implements contactPresenter.MV
             @Override
             public boolean onMenuItemClick(MenuItem item) {
                 if (item.getTitle().toString().equals("Edit")){
-                    //go to edit
+                    presenter.handleEditClick();
                 }else{
                     presenter.deleteContact(contact);
                     //delete
@@ -116,18 +120,26 @@ public class ContactActivity extends BaseActivity implements contactPresenter.MV
         frame.addView(fab);
         setContentView(wrapper);
 
+
     }
 
     @Override
     public void goBackToContactsPage(Contact contact, boolean didDelete) {
         Intent intent = new Intent();
-        if(didDelete){
-            intent.putExtra("id",contact.id);
-            setResult(ContactsActivity.DELETED_RESULT,intent);
-        }else{
-            setResult(Activity.RESULT_CANCELED,null);
+        if (didDelete) {
+            intent.putExtra("id", contact.id);
+            setResult(ContactsActivity.DELETED_RESULT, intent);
+        } else {
+            setResult(Activity.RESULT_CANCELED, null);
         }
         finish();
 
+    }
+
+    @Override
+    public void goToEditPage(Contact contact) {
+        Intent intent = new Intent(this, CreateOrUpdatedContactActivity.class);
+        intent.putExtra("contact",contact);
+        startActivityForResult(intent, UPDATE_POST);
     }
 }

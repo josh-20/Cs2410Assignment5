@@ -7,36 +7,36 @@ import android.view.Gravity;
 import android.widget.LinearLayout;
 
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.AppCompatButton;
-import androidx.appcompat.widget.AppCompatEditText;
-import androidx.appcompat.widget.AppCompatTextView;
-import androidx.room.Room;
 
 import com.example.contactsapp.components.ImageSelector;
 import com.example.contactsapp.components.MaterialInput;
-import com.example.contactsapp.database.AppDataBase;
 import com.example.contactsapp.models.Contact;
-import com.example.contactsapp.presenters.NewContactPresenter;
+import com.example.contactsapp.presenters.CreateOrUpdateContactPresenter;
 import com.google.android.material.button.MaterialButton;
 
-import static com.example.contactsapp.components.ImageSelector.*;
-
-public class newContactActivity extends BaseActivity implements NewContactPresenter.MVPView {
-    NewContactPresenter presenter;
+public class CreateOrUpdatedContactActivity extends BaseActivity implements CreateOrUpdateContactPresenter.MVPView {
+    CreateOrUpdateContactPresenter presenter;
     ImageSelector imageSelector;
+    MaterialInput nameInput;
+    MaterialInput phoneNumberInput;
+    MaterialInput emailInput;
     public static int PICK_IMAGE = 1;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        presenter = new NewContactPresenter(this);
+        presenter = new CreateOrUpdateContactPresenter(this);
+        Intent intent = getIntent();
+        Contact updateContact = (Contact)intent.getSerializableExtra("contact");
+        System.out.println(updateContact);
+        presenter.loadContact(updateContact);
 
         LinearLayout mainLayout = new LinearLayout(this);
         mainLayout.setOrientation(LinearLayout.VERTICAL);
         // TODO: Change to use MaterialButton labels other then normal AppCompatTextView
-        MaterialInput name = new MaterialInput(this,"Name");
-        MaterialInput phoneNumber = new MaterialInput(this,"Phone Number");
-        MaterialInput email = new MaterialInput(this,"Email");
+        nameInput = new MaterialInput(this,"Name");
+
+        phoneNumberInput = new MaterialInput(this,"Phone Number");
+        emailInput = new MaterialInput(this,"Email");
 
 
         MaterialButton save = new MaterialButton(this);
@@ -56,9 +56,9 @@ public class newContactActivity extends BaseActivity implements NewContactPresen
         cancel.setText("Cancel");
 
         save.setOnClickListener(view ->{
-            presenter.CreateContact(name.getText().toString(),
-                    email.getText().toString(),
-                    phoneNumber.getText().toString(),
+            presenter.saveContact(nameInput.getText().toString(),
+                    emailInput.getText().toString(),
+                    phoneNumberInput.getText().toString(),
                     imageSelector.getImageUri());
 
         });
@@ -70,9 +70,9 @@ public class newContactActivity extends BaseActivity implements NewContactPresen
         buttons.addView(save);
 
 
-        mainLayout.addView(name);
-        mainLayout.addView(phoneNumber);
-        mainLayout.addView(email);
+        mainLayout.addView(nameInput);
+        mainLayout.addView(phoneNumberInput);
+        mainLayout.addView(emailInput);
         mainLayout.addView(buttons);
         setContentView(mainLayout);
     }
@@ -109,5 +109,16 @@ public class newContactActivity extends BaseActivity implements NewContactPresen
     @Override
     public void displayImage(String uri) {
         imageSelector.setImageUri(uri);
+    }
+
+    @Override
+    public void renderContactForm(Contact contact) {
+        runOnUiThread(() ->{
+            imageSelector.setImageUri(contact.imagePath);
+            nameInput.setText(contact.Name);
+            phoneNumberInput.setText(contact.PhoneNumber);
+            emailInput.setText(contact.emailAddress);
+        });
+
     }
 }

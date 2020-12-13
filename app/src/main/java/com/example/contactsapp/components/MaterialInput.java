@@ -23,5 +23,8 @@ public class MaterialInput extends TextInputLayout {
         addView(editText);
     }
     public Editable getText(){return editText.getText();}
+    public void setText(String text){
+        editText.setText(text);
+    }
 
 }

@@ -1,11 +1,7 @@
 package com.example.contactsapp;
 
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.AppCompatButton;
 import androidx.appcompat.widget.AppCompatImageView;
-import androidx.appcompat.widget.AppCompatTextView;
-import androidx.room.Room;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -18,10 +14,8 @@ import android.widget.LinearLayout;
 import android.widget.ScrollView;
 
 import com.example.contactsapp.components.ContactListItem;
-import com.example.contactsapp.database.AppDataBase;
 import com.example.contactsapp.models.Contact;
 import com.example.contactsapp.presenters.contactsPresenter;
-import com.google.android.material.button.MaterialButton;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
@@ -77,7 +71,7 @@ public class ContactsActivity extends BaseActivity implements contactsPresenter.
     @Override
     public void goToNewContactsPage() {
         // with new intents always make a new activity inside of the manifests
-        Intent intent = new Intent(this, newContactActivity.class);
+        Intent intent = new Intent(this, CreateOrUpdatedContactActivity.class);
         startActivityForResult(intent, CreateNewContact);
     }
 
