@@ -14,6 +14,9 @@ public class CreateOrUpdateContactPresenter {
          void takePhoto();
          void displayImage(String uri);
          void renderContactForm(Contact contact);
+         void displayNameError();
+         void displayPhoneNumberError();
+         void displayEmailError();
     }
     public CreateOrUpdateContactPresenter(MVPView view){
         this.view = view;
@@ -24,6 +27,18 @@ public class CreateOrUpdateContactPresenter {
         // check if valid contact.
         //TODO: check for valid email, phone number and name.
         new Thread(() ->{
+            if (name.equals("")) {
+                view.displayNameError();
+                return;
+            }
+            if(phoneNumber.equals("")){
+                view.displayPhoneNumberError();
+                return;
+            }
+            if(!email.equals("") && !email.contains("@")){
+                view.displayEmailError();
+                return;
+            }
             Contact contactToSave;
             if(contact != null){
                 contactToSave = contact;

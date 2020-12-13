@@ -164,4 +164,29 @@ public class CreateOrUpdatedContactActivity extends BaseActivity implements Crea
         });
 
     }
+
+    @Override
+    public void displayNameError() {
+        runOnUiThread(()->{
+            nameInput.setErrorEnabled(true);
+            nameInput.setError("Name cannot be blank");
+        });
+
+    }
+
+    @Override
+    public void displayPhoneNumberError() {
+        runOnUiThread(() -> {
+            phoneNumberInput.setErrorEnabled(true);
+            phoneNumberInput.setError("Phone Number Required");
+        });
+    }
+
+    @Override
+    public void displayEmailError() {
+        runOnUiThread(() -> {
+            emailInput.setErrorEnabled(true);
+            emailInput.setError("Must Be a Valid Email");
+        });
+    }
 }
